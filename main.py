@@ -1,10 +1,16 @@
 # $pip install flask
 from flask import Flask   #import Flask module
+from flask import request
 app = Flask(__name__)     #set up Flask object
 
-@app.route('/') #set web route '/'
+@app.route('/', methods=['GET']) #set web route '/'
 def home(): #set func.
-    return 'Hello world.'
+    name = request.args.get('name')
+    if name is None:
+        name = 'World'
+    else:
+        name = name.capitalize()
+    return 'Welcome {}.'.format(name)
 """
 @app.route('/grape')
 def grape():
