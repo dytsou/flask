@@ -11,7 +11,26 @@ def home(): #set func.
     else:
         name = name.capitalize()
     return 'Welcome {}.'.format(name)
+
+@app.route('/login', methods=['GET', 'POST']) #use GET, POST method
+def login():
+    if request.method == "POST":
+        username = request.values['username']
+        password = request.values['password']
+        if username == 'dytsou' and password == '0000':
+            return "Hi! What a good day!"
+        else:
+            return "Either the username or password is incorrect."
+    return """
+        <form method='post' action=''>
+            <p>帳號：<input type='text' name='username' /></p>
+            <p>密碼：<input type='text' name='password' /></p>
+            <p><button type='submit'>確定</button></p>
+        </form>
 """
+
+"""
+
 @app.route('/grape')
 def grape():
     return 'Hello grape.'
