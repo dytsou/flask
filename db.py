@@ -19,9 +19,18 @@ class student(db.Model):
             self.tel = tel
             self.addr = addr
             self.email = email
-@app.route('/')
+
+@app.route('/create')
 def index():
       db.create_all()
       return "Success"
+
+@app.route('/insert/<name>/<tel>/<addr>/<email>')
+def insert(name, tel, addr, email):
+      data = student(name, tel, addr, email)
+      db.session.add(data)
+      db.session.commit()
+      return "Successfully Inserted"
+
 if __name__ == '__main__':
       app.run()
