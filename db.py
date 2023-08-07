@@ -19,6 +19,44 @@ class students(db.Model):
             self.tel = tel
             self.addr = addr
             self.email = email
+      
+@app.route('/updateusr/<int:uid>', methods=['GET', 'POST']) #use GET, POST method
+def updateusr(uid):
+      stu = students.query.get(uid)
+      if request.method == "POST":
+            name, tel, addr, email = "", "", "", ""
+            if request.values['name'] != "":
+                  name = request.values['name']
+                  stu.name = name + "(modified)"
+            if request.values['tel'] != "":
+                  tel = request.values['tel']
+                  stu.tel = tel + "(modified)"
+            if request.values['addr'] != "":
+                  addr = request.values['addr']
+                  stu.addr = addr + "(modified)"
+            if request.values['email'] != "":
+                  email = request.values['email']
+                  stu.email = email + "(modified)"
+            print(name, tel, addr, email)
+            db.session.commit()
+            if name != "" or tel != "" or addr != "" or email != "":
+                  return "Successfully Updated"
+      return """
+            <form method='post' action=''>
+                  <p>name:<input type='text' name='name' /></p>
+                  <p>tel:<input type='text' name='tel' /></p>
+                  <p>addr:<input type='text' name='addr' /></p>
+                  <p>email:<input type='text' name='email' /></p>
+                  <p><button type='submit'>summit</button></p>
+            </form>
+"""
+
+@app.route('/deleteusr/<int:uid>')
+def deleteusr(uid):
+      stu = students.query.get(uid)
+      db.session.delete(stu)
+      db.session.commit()
+      return "Successfully Deleted"    
 
 @app.route('/create')
 def index():
