@@ -6,7 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dytsou:dyt50u@127.0.0.1:54
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-class student(db.Model):
+class students(db.Model):
       __tablename__ = 'students'
       sid = db.Column(db.Integer, primary_key=True)
       name = db.Column(db.String(50), nullable=False)
@@ -27,10 +27,18 @@ def index():
 
 @app.route('/insert/<name>/<tel>/<addr>/<email>')
 def insert(name, tel, addr, email):
-      data = student(name, tel, addr, email)
+      data = students(name, tel, addr, email)
       db.session.add(data)
       db.session.commit()
       return "Successfully Inserted"
+
+@app.route('/queryall')
+def queryall():
+      datas = students.query.all()
+      msg = ""
+      for stu in datas:
+            msg += f"{stu.name},{stu.tel},{stu.addr},{stu.email}<br>"
+      return msg
 
 if __name__ == '__main__':
       app.run()
