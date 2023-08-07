@@ -26,5 +26,15 @@ def setup():
       db.session.commit()
       return "db setup successfully"
 
+@app.route('/insert')
+def insert():
+      sql = """
+      INSERT INTO students2 (name, tel, addr, email)
+      VALUES ('John', '12345678', 'Taipei', 'John@mail.org')
+      """
+      db.session.execute(text(sql))
+      db.session.commit()
+      return "db insert successfully"
+
 if __name__ == '__main__':
       app.run()
