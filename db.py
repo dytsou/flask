@@ -40,5 +40,15 @@ def queryall():
             msg += f"{stu.name},{stu.tel},{stu.addr},{stu.email}<br>"
       return msg
 
+@app.route('/queryuid/<int:uid>')
+def queryusr(uid):
+      stu = students.query.get(uid)
+      return f"{stu.name}<br>{stu.tel}<br>{stu.addr}<br>{stu.email}"
+
+@app.route('/queryname/<string:name>')
+def queryname(name):
+      stu = students.query.filter_by(name=name).first()
+      return f"{stu.name}<br>{stu.tel}<br>{stu.addr}<br>{stu.email}"
+
 if __name__ == '__main__':
       app.run()
