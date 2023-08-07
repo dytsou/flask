@@ -36,12 +36,19 @@ def insert():
       db.session.commit()
       return "db insert successfully"
 
-@app.route('/update/<int:uid>')
-def update(uid):
-      sql = "UPDATE students2 SET addr = 'Kaohsiung(modified)' WHERE sid = " + str(uid)
+@app.route('/update/<int:uid>/<name>')
+def update(uid, name):
+      sql = "UPDATE students2 SET name = '" + name + "(modified)' WHERE sid = " + str(uid)
       db.session.execute(text(sql))
       db.session.commit()
       return "db update successfully"
+
+@app.route('/delete/<name>')
+def delete(name):
+      sql = "DELETE FROM students2 WHERE name = '" + name + "'"
+      db.session.execute(text(sql))
+      db.session.commit()
+      return "db delete successfully"
 
 if __name__ == '__main__':
       app.run()
