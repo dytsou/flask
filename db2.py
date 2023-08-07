@@ -36,5 +36,12 @@ def insert():
       db.session.commit()
       return "db insert successfully"
 
+@app.route('/update/<int:uid>')
+def update(uid):
+      sql = "UPDATE students2 SET addr = 'Kaohsiung(modified)' WHERE sid = " + str(uid)
+      db.session.execute(text(sql))
+      db.session.commit()
+      return "db update successfully"
+
 if __name__ == '__main__':
       app.run()
